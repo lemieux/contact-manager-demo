@@ -1,0 +1,27 @@
+{
+  "name": "lightspeed-js",
+  "version": "0.0.0",
+  "authors": [
+    "Marc-Antoine Lemieux <marc@marcantoinelemieux.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.1.2",
+    "backbone-forms": "~0.14.0",
+    "marionette": "~1.7.3",
+    "jquery": "~1.11.0",
+    "require-handlebars-plugin": "~0.8.0",
+    "underscore": "~1.6.0"
+  },
+  "devDependencies": {
+    "almond": "~0.2.9"
+  }
+}
