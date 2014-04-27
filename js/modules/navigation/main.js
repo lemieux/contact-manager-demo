@@ -13,7 +13,11 @@ define([
         startWithParent: true,
 
         initialize: function() {
-            _.bindAll(this);
+            _.bindAll(this,
+                'onStart',
+                'onClick',
+                'catchLinks'
+            );
         },
 
         onStart: function() {

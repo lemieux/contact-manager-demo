@@ -1,13 +1,27 @@
 <td>
-    <a href="/menu/{{id}}/" class="name">{{name}}</a>
-</td>
-<td class="description">
-    {{description}}
+    <a href="/{{id}}/" class="name">{{name}}</a>
 </td>
 <td>
-    <span class="label label-success">Active</span>
+    {{title}}
+</td>
+<td>
+    {{address}}
+</td>
+<td>
+<ul>
+{{#each phones}}
+    <li>{{this}}</li>
+{{/each}}
+</ul>
+
+</td>
+<td>
+    {{email}}
+</td>
+<td>
     <ul class="actions">
-        <li><a href="/menu/{{id}}/">Edit</a></li>
-        <li class="last"><a href="#" data-action-delete>Delete</a></li>
+        <li><a href="/{{id}}/">Edit</a></li>
+        <li><a href="#" data-action-delete>Delete</a></li>
     </ul>
 </td>
+

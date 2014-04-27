@@ -3,10 +3,10 @@ define([
     'modules/contact/models/contact-model'
 ], function(
     Backbone,
-    MenuModel
+    ContactModel
 ) {
     return Backbone.Collection.extend({
-        model: MenuModel,
+        model: ContactModel,
         url: '/api/contacts/',
         comparator: 'name'
     });

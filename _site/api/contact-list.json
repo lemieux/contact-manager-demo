@@ -1,0 +1,13 @@
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "title": "Useful employee",
+        "address": "1 some Street, Montreal",
+        "phones": [
+            "514-888-8888"
+        ],
+        "email": "someone@somewhere.com",
+        "picture": "http://www.catster.com/files/original.jpg"
+    }
+]

@@ -11,13 +11,15 @@ module.exports = function(grunt) {
     var fs = require('fs');
     var path = require('path');
 
+    var modRewrite = require('connect-modrewrite');
+
     // Project configuration.
     grunt.initConfig({
 
         // Metadata.
         pkg: grunt.file.readJSON('package.json'),
         clean: {
-            dist: ['_site/js']
+            dist: ['_site/dist']
         },
 
         jshint: {
@@ -26,8 +28,8 @@ module.exports = function(grunt) {
             },
             src: {
                 src: [
-                'js/**/*.js',
-                '!js/libs/**/*.js'
+                    'js/**/*.js',
+                    '!js/libs/**/*.js'
                 ]
             },
             test: {
@@ -51,7 +53,18 @@ module.exports = function(grunt) {
             server: {
                 options: {
                     port: 8080,
-                    base: '_site'
+                    base: '_site',
+                    middleware: function(connect, options) {
+                        var middlewares;
+                        middlewares = [];
+                        middlewares.push(modRewrite(['^/api/contacts/$ /api/contact-list.json [L]']));
+                        middlewares.push(modRewrite(['^/api/contacts/\\d*$ /api/contact-list.json [L]']));
+                        middlewares.push(modRewrite(['^/api/contacts/\\d*/$ /api/contact-list.json [L]']));
+                        options.base.forEach(function(base) {
+                            return middlewares.push(connect["static"](base));
+                        });
+                        return middlewares;
+                    }
                 }
             }
         },
@@ -90,7 +103,7 @@ module.exports = function(grunt) {
                     include: ['js/main'],
                     mainConfigFile: 'js/config.js',
                     name: 'bower_components/almond/almond',
-                    out: '_site/js/<%= pkg.name %>.min.js',
+                    out: '_site/dist/<%= pkg.name %>.min.js',
                     optimize: 'uglify2',
 
                     generateSourceMaps: true,

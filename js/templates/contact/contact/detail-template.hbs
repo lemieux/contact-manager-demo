@@ -1,17 +1,45 @@
-<div class="col-md-8 column form-horizontal">
+
+<div class="col-md-3">
+{{#if picture}}
+    <a href="#" class="thumbnail">
+        <img src="{{picture}}">
+    </a>
+{{/if}}
+</div>
+
+<div class="col-md-5 column form-horizontal">
     <div class="form-group" data-ui-name-group>
-        <label class="col-md-3 control-label">Name :</label>
+        <label class="col-md-3 control-label">Name:</label>
         <div class="col-md-5" data-region-name>
         </div>
     </div>
-    <div class="form-group" data-ui-description-group>
-        <label class="col-md-3 control-label">Description :</label>
-        <div class="col-md-5" data-region-description>
+    <div class="form-group" data-ui-title-group>
+        <label class="col-md-3 control-label">Job Title:</label>
+        <div class="col-md-5" data-region-title>
+        </div>
+    </div>
+    <div class="form-group" data-ui-address-group>
+        <label class="col-md-3 control-label">Address:</label>
+        <div class="col-md-5" data-region-address>
+        </div>
+    </div>
+    <div class="form-group" data-ui-phones-group>
+        <label class="col-md-3 control-label">Phone numbers:</label>
+        <div class="col-md-5" data-region-phones>
+        </div>
+    </div>
+    <div class="form-group" data-ui-email-group>
+        <label class="col-md-3 control-label">Email:</label>
+        <div class="col-md-5" data-region-email>
+        </div>
+    </div>
+    <div class="form-group" data-ui-picture-group>
+        <label class="col-md-3 control-label">Picture:</label>
+        <div class="col-md-5" data-region-picture>
         </div>
     </div>
 </div>
 <div class="col-md-4 column">
-
     <button class="btn btn-primary" data-action-save>Save</button>
+    <a class="btn-link margin-left" href="/">Back to listing</a>
 </div>
-<div class="col-md-8 column  form-horizontal" data-region-items></div>

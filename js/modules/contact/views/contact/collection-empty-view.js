@@ -6,6 +6,10 @@ define([
     ContactItemEmptyTemplate
 ) {
     return Marionette.ItemView.extend({
-        template: ContactItemEmptyTemplate
+        template: ContactItemEmptyTemplate,
+
+        triggers: {
+            'click [data-action-add]': 'contact:add'
+        }
     });
 });

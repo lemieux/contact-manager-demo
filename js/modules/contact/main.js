@@ -20,7 +20,7 @@ define([
     var Router = Marionette.AppRouter.extend({
         appRoutes: {
             '': 'showListing',
-            '/:id/': 'showContactDetails'
+            ':id/': 'showContactDetails'
         }
     });
 

@@ -15,13 +15,13 @@ define([
     'underscore',
     'backbone',
     'marionette'
-], function($, _, Backbone) {
+], function($, _, Backbone, Marionette) {
 
     //==================================================================================================
     //FORM
     //==================================================================================================
 
-    var Form = Backbone.Marionette.ItemView.extend({
+    var Form = Marionette.ItemView.extend({
 
         /**
          * Constructor
@@ -425,7 +425,7 @@ define([
                 this.hasFocus = false;
             }
 
-            return Backbone.Marionette.ItemView.prototype.trigger.apply(this, arguments);
+            return Marionette.ItemView.prototype.trigger.apply(this, arguments);
         },
 
         /**
@@ -443,7 +443,7 @@ define([
                 field.remove();
             });
 
-            return Backbone.Marionette.ItemView.prototype.remove.apply(this, arguments);
+            return Marionette.ItemView.prototype.remove.apply(this, arguments);
         }
 
     }, {
@@ -574,7 +574,7 @@ define([
     //FIELDSET
     //==================================================================================================
 
-    Form.Fieldset = Backbone.Marionette.ItemView.extend({
+    Form.Fieldset = Marionette.ItemView.extend({
 
         /**
          * Constructor
@@ -679,7 +679,7 @@ define([
                 field.remove();
             });
 
-            Backbone.Marionette.ItemView.prototype.remove.call(this);
+            Marionette.ItemView.prototype.remove.call(this);
         }
 
     }, {
@@ -700,7 +700,7 @@ define([
     //FIELD
     //==================================================================================================
 
-    Form.Field = Backbone.Marionette.ItemView.extend({
+    Form.Field = Marionette.ItemView.extend({
 
         /**
          * Constructor
@@ -960,7 +960,7 @@ define([
         remove: function() {
             this.editor.remove();
 
-            Backbone.Marionette.ItemView.prototype.remove.call(this);
+            Marionette.ItemView.prototype.remove.call(this);
         }
 
     }, {
@@ -1015,7 +1015,7 @@ define([
      * @param {Object} [options.validators] Validators; falls back to those stored on schema
      * @param {Object} [options.form]       The form
      */
-    Form.Editor = Form.editors.Base = Backbone.Marionette.ItemView.extend({
+    Form.Editor = Form.editors.Base = Marionette.ItemView.extend({
 
         defaultValue: null,
 
@@ -1158,7 +1158,7 @@ define([
                 this.hasFocus = false;
             }
 
-            return Backbone.Marionette.ItemView.prototype.trigger.apply(this, arguments);
+            return Marionette.ItemView.prototype.trigger.apply(this, arguments);
         },
 
         /**
@@ -1978,7 +1978,7 @@ define([
         remove: function() {
             this.nestedForm.remove();
 
-            Backbone.Marionette.ItemView.prototype.remove.call(this);
+            Marionette.ItemView.prototype.remove.call(this);
         },
 
         validate: function() {

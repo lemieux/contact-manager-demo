@@ -1,25 +1,31 @@
 define([
-    'jquery',
     'marionette',
     'hbs!templates/contact/contact/detail-template'
 ], function(
-    $,
     Marionette,
     ContactDetailTemplate
 ) {
     return Marionette.Layout.extend({
         template: ContactDetailTemplate,
-        className: 'row form-wrapper',
+        className: 'row',
 
         regions: {
             name: '[data-region-name]',
-            description: '[data-region-description]'
+            title: '[data-region-title]',
+            address: '[data-region-address]',
+            phones: '[data-phones-title]',
+            email: '[data-region-email]',
+            picture: '[data-region-picture]'
         },
 
         ui: {
             saveButton: 'button[data-action-save]',
             nameGroup: '[data-ui-name-group]',
-            descriptionGroup: '[data-ui-description-group]'
+            titleGroup: '[data-ui-title-group]',
+            addressGroup: '[data-ui-address-group]',
+            phonesGroup: '[data-ui-phones-group]',
+            emailGroup: '[data-ui-email-group]',
+            pictureGroup: '[data-ui-picture-group]'
         },
 
         triggers: {
@@ -60,12 +66,44 @@ define([
             this.unsetFieldError('name');
         },
 
-        setDescriptionFieldError: function(errorMessage) {
-            this.setFieldError('description', errorMessage);
+        setTitleFieldError: function(errorMessage) {
+            this.setFieldError('title', errorMessage);
         },
 
-        unsetDescriptionFieldError: function() {
-            this.unsetFieldError('description');
+        unsetTitleFieldError: function() {
+            this.unsetFieldError('title');
+        },
+
+        setAddressFieldError: function(errorMessage) {
+            this.setFieldError('address', errorMessage);
+        },
+
+        unsetAddressFieldError: function() {
+            this.unsetFieldError('address');
+        },
+
+        setPhonesFieldError: function(errorMessage) {
+            this.setFieldError('phones', errorMessage);
+        },
+
+        unsetPhonesFieldError: function() {
+            this.unsetFieldError('phones');
+        },
+
+        setEmailFieldError: function(errorMessage) {
+            this.setFieldError('email', errorMessage);
+        },
+
+        unsetEmailFieldError: function() {
+            this.unsetFieldError('email');
+        },
+
+        setPictureFieldError: function(errorMessage) {
+            this.setFieldError('picture', errorMessage);
+        },
+
+        unsetPictureFieldError: function() {
+            this.unsetFieldError('picture');
         }
     });
 });

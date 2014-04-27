@@ -8,10 +8,12 @@ define([
     LayoutTemplate
 ) {
     return Marionette.ItemView.extend({
-        tagName: 'h3',
+        tagName: 'h1',
+
+        className: 'page-header',
 
         initialize: function(options) {
-            _.bindAll(this);
+            _.bindAll(this, 'template');
             this.text = options.text;
         },
 

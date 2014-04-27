@@ -3,7 +3,7 @@ define([
 ], function(
     Backbone
 ) {
-    return Backbone.RelationalModel.extend({
+    return Backbone.Model.extend({
         urlRoot: '/api/contacts/',
 
         schema: {
@@ -22,8 +22,25 @@ define([
                 ]
             },
 
-            description: {
+            title: {
                 type: 'Text'
+            },
+
+            address: {
+                type: 'Text'
+            },
+
+            phones:  {
+                type: 'List',
+                itemType: 'Text'
+            },
+
+            email: {
+                validators: ['required', 'email']
+            },
+
+            picture: {
+                type: 'url'
             }
         }
     });

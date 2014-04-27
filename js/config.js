@@ -14,6 +14,8 @@ requirejs.config({
         'backbone.babysitter': 'bower_components/backbone.babysitter/lib/amd/backbone.babysitter',
         'backbone.wreqr': 'bower_components/backbone.wreqr/lib/backbone.wreqr',
         'backbone-forms': 'js/libs/backbone-forms-marionette',
+        'backbone-forms-templates': 'js/libs/backbone-forms-templates',
+        'backbone-forms-list': 'bower_components/backbone-forms/distribution.amd/editors/list',
         marionette: 'bower_components/marionette/lib/core/amd/backbone.marionette',
         hbs: 'bower_components/require-handlebars-plugin/hbs',
         underscore: 'bower_components/underscore/underscore',

@@ -2,7 +2,10 @@ define([
     'underscore',
     'backbone',
     'marionette',
-    'modules/contact/views/contact/detail-view'
+    'modules/contact/views/contact/detail-view',
+    'backbone-forms',
+    'backbone-forms-list',
+    'backbone-forms-templates'
 ], function(
     _,
     Backbone,
@@ -18,6 +21,7 @@ define([
 
         buildDetailView: function() {
             var detailView = Marionette.getOption(this, 'detailView');
+
             var view = new detailView({
                 model: this.getModel()
             });
@@ -37,16 +41,44 @@ define([
                     schema: this.getModel().schema.name
                 });
 
-                this.descriptionField = new Backbone.Form.editors.Text({
+                this.titleField = new Backbone.Form.editors.Text({
                     model: this.getModel(),
-                    key: 'description',
-                    schema: this.getModel().schema.description
+                    key: 'title',
+                    schema: this.getModel().schema.title
+                });
+
+                this.addressField = new Backbone.Form.editors.Text({
+                    model: this.getModel(),
+                    key: 'address',
+                    schema: this.getModel().schema.address
+                });
+
+                this.phonesField = new Backbone.Form.editors.Text({
+                    model: this.getModel(),
+                    key: 'phones',
+                    schema: this.getModel().schema.phones
+                });
+
+                this.emailField = new Backbone.Form.editors.Text({
+                    model: this.getModel(),
+                    key: 'email',
+                    schema: this.getModel().schema.email
+                });
+
+                this.pictureField = new Backbone.Form.editors.Text({
+                    model: this.getModel(),
+                    key: 'picture',
+                    schema: this.getModel().schema.picture
                 });
 
 
                 this.view.on('show', _.bind(function() {
                     this.view.name.show(this.nameField);
-                    this.view.description.show(this.descriptionField);
+                    this.view.title.show(this.titleField);
+                    this.view.address.show(this.addressField);
+                    this.view.phones.show(this.phonesField);
+                    this.view.email.show(this.emailField);
+                    this.view.picture.show(this.pictureField);
                 }, this));
             }
 
@@ -64,13 +96,49 @@ define([
                 this.view.unsetNameFieldError();
             }
 
-            var descriptionError = this.descriptionField.commit();
+            var titleError = this.titleField.commit();
 
-            if (descriptionError) {
-                this.view.setDescriptionFieldError(descriptionError.message);
+            if (titleError) {
+                this.view.setTitleFieldError(titleError.message);
                 hasErrors = true;
             } else {
-                this.view.unsetDescriptionFieldError();
+                this.view.unsetTitleFieldError();
+            }
+
+            var addressError = this.addressField.commit();
+
+            if (addressError) {
+                this.view.setAddressFieldError(addressError.message);
+                hasErrors = true;
+            } else {
+                this.view.unsetAddressFieldError();
+            }
+
+            var phonesError = this.phonesField.commit();
+
+            if (phonesError) {
+                this.view.setPhonesFieldError(phonesError.message);
+                hasErrors = true;
+            } else {
+                this.view.unsetPhonesFieldError();
+            }
+
+            var emailError = this.emailField.commit();
+
+            if (emailError) {
+                this.view.setEmailFieldError(emailError.message);
+                hasErrors = true;
+            } else {
+                this.view.unsetEmailFieldError();
+            }
+
+            var pictureError = this.pictureField.commit();
+
+            if (pictureError) {
+                this.view.setPictureFieldError(pictureError.message);
+                hasErrors = true;
+            } else {
+                this.view.unsetPictureFieldError();
             }
 
             if (!hasErrors) {
