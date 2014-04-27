@@ -25,19 +25,23 @@ define([
             'click [data-action-add]': 'contact:add'
         },
 
+        events: {
+            'submit form': 'applyFilter'
+        },
+
         getFilterValue: function() {
             return this.ui.filterInput.val();
         },
 
-        onKeydown: function() {
+        applyFilter: function(e) {
             this._renderChildren();
+
+            e.preventDefault();
         },
 
         onRender: function() {
             // the handler will be delayed by 200ms and by a maximum of 600ms
-            var keydownHandler = _.debounce(_.bind(this.onKeydown, this), 200, {
-                maxWait: 600
-            });
+            var keydownHandler = _.debounce(_.bind(this.applyFilter, this), 200);
 
             this.ui.filterInput.on('keydown', keydownHandler);
         },

@@ -6,7 +6,9 @@ define([
     'hbs!templates/forms/nested-field',
     'hbs!templates/forms/list',
     'hbs!templates/forms/list-item',
-    'hbs!templates/forms/list-nested-model'
+    'hbs!templates/forms/list-nested-model',
+    'backbone-forms',
+    'backbone-forms-list'
 ], function(
     Backbone,
     FormTemplate,

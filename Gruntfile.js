@@ -109,6 +109,18 @@ module.exports = function(grunt) {
                     generateSourceMaps: true,
                     preserveLicenseComments: false,
                 }
+            },
+
+            source: {
+                options: {
+                    almond: true,
+                    baseUrl: '.',
+                    include: ['js/main'],
+                    mainConfigFile: 'js/config.js',
+                    name: 'bower_components/almond/almond',
+                    out: '_site/dist/<%= pkg.name %>.js',
+                    optimize: 'none'
+                }
             }
         }
     });
@@ -118,7 +130,7 @@ module.exports = function(grunt) {
     });
     require('time-grunt')(grunt);
 
-    grunt.registerTask('dist-js', ['requirejs:minified']);
+    grunt.registerTask('dist-js', ['requirejs:minified', 'requirejs:source']);
 
     grunt.registerTask('dist', ['clean', 'dist-js']);
 

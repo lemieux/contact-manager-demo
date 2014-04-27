@@ -9,5 +9,17 @@
         ],
         "email": "someone@somewhere.com",
         "picture": "http://www.catster.com/files/original.jpg"
+    },
+
+    {
+        "id": 2,
+        "name": "Batman",
+        "title": "The Dark Knight",
+        "address": "2 Bat road, Gotham",
+        "phones": [
+            "1-800-BAT-CALL"
+        ],
+        "email": "bat@man.com",
+        "picture": "http://upload.wikimedia.org/wikipedia/en/9/90/Bale_as_Batman.jpg"
     }
 ]

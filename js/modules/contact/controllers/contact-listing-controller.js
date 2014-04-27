@@ -22,6 +22,13 @@ define([
 
         collectionView: CollectionView,
 
+
+        initialize: function(options) {
+            _.bindAll(this,
+                'filterText'
+            );
+        },
+
         getCollection: function() {
             return Marionette.getOption(this, 'collection');
         },
@@ -84,7 +91,7 @@ define([
                 if (!_.isEmpty(textFilterValue)) {
                     valid = false;
 
-                    _.each(filterAttributes, function(attribute) {
+                    _.find(filterAttributes, function(attribute) {
                         if (model.has(attribute)) {
                             var rawValue = model.get(attribute);
 
@@ -95,10 +102,7 @@ define([
                             valid = value.indexOf(textFilterValue) !== -1;
                         }
 
-                        if (valid) {
-                            // the function needs to return false to stop the iteration
-                            return false;
-                        }
+                        return valid;
                     });
                 }
             }

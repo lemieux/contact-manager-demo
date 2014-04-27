@@ -13,7 +13,7 @@ define([
             name: '[data-region-name]',
             title: '[data-region-title]',
             address: '[data-region-address]',
-            phones: '[data-phones-title]',
+            phones: '[data-region-phones]',
             email: '[data-region-email]',
             picture: '[data-region-picture]'
         },

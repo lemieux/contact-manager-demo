@@ -53,7 +53,7 @@ define([
                     schema: this.getModel().schema.address
                 });
 
-                this.phonesField = new Backbone.Form.editors.Text({
+                this.phonesField = new Backbone.Form.editors.List({
                     model: this.getModel(),
                     key: 'phones',
                     schema: this.getModel().schema.phones
