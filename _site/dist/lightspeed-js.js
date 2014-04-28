@@ -25626,8 +25626,13 @@ define('modules/contact/views/header-view',[
 
         className: 'page-header',
 
+        initialize: function(options) {
+            _.bindAll(this, 'template');
+            this.text = options.text;
+        },
+
         template: function() {
-            return Marionette.getOption(this, 'text');
+            return this.text;
         }
     });
 });
