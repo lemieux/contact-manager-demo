@@ -35,6 +35,9 @@ define([
 
                 this.view.on('contact:save', _.bind(this.saveContact, this));
 
+                // Every field is created manually here, but a Backbone.Form could
+                // be used instead. I did not have time to make it work with Marionette.
+
                 this.nameField = new Backbone.Form.editors.Text({
                     model: this.getModel(),
                     key: 'name',
@@ -87,6 +90,9 @@ define([
 
         saveContact: function() {
             var hasErrors = false;
+
+            // Checks every field for errors
+
             var nameError = this.nameField.commit();
 
             if (nameError) {

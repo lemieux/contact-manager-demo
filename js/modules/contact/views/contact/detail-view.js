@@ -32,10 +32,20 @@ define([
             'click @ui.saveButton': 'contact:save'
         },
 
+        /**
+         * Get the element from the UI object
+         * @param  {String} fieldName
+         * @return {jQuery Object}
+         */
         getFieldElement: function(fieldName) {
             return this.ui[fieldName + 'Group'];
         },
 
+        /**
+         * Sets a field in error state
+         * @param {String} fieldName
+         * @param {String} errorMessage
+         */
         setFieldError: function(fieldName, errorMessage) {
             var element = this.getFieldElement(fieldName);
 
@@ -51,12 +61,21 @@ define([
             }
         },
 
+        /**
+         * Remove the error state from a field
+         * @param  {String} fieldName
+         */
         unsetFieldError: function(fieldName) {
             var element = this.getFieldElement(fieldName);
 
             element.removeClass('has-error');
             element.find('[data-ui-error]').remove();
         },
+
+        /*
+         *   The following methods are helpers for each fields of the form
+         */
+
 
         setNameFieldError: function(errorMessage) {
             this.setFieldError('name', errorMessage);

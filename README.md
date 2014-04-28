@@ -39,6 +39,13 @@ Missing things
 - Mocha/CasperJS tests
 - UI customizations
 
+Things that could be improved
+-----------------------------
+
+- Contacts are fetched when the page is loaded instead of being bootstrapped directly in the page. This creates a delay.
+- A new contact can have required field empty if you click on `Back to listing`. This could be avoided by checking if the contact is new and deleting it if nothing was modified.
+- Form validation could be a lot nicer. Error messages are not very friendly.
+
 
 Librairies used
 ---------------

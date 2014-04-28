@@ -34,6 +34,9 @@ define([
             return false;
         },
 
+        /**
+         * Catch all clicks in the page
+         */
         catchLinks: function() {
             $(document).on('click', 'a[href^="/"]', this.onClick);
         }

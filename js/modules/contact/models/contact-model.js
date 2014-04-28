@@ -6,6 +6,10 @@ define([
     return Backbone.Model.extend({
         urlRoot: '/api/contacts/',
 
+        /**
+         * Schema to validate the model against.
+         * @type {Object}
+         */
         schema: {
             name: {
                 type: 'Text',

@@ -12,13 +12,8 @@ define([
 
         className: 'page-header',
 
-        initialize: function(options) {
-            _.bindAll(this, 'template');
-            this.text = options.text;
-        },
-
         template: function() {
-            return this.text;
+            return Marionette.getOption(this, 'text');
         }
     });
 });

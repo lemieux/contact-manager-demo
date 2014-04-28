@@ -12,6 +12,11 @@ define([
     ContactModel
 ) {
     return Marionette.Controller.extend({
+
+        /**
+         * Attributes that will be used to generate the filter function
+         * @type {Array}
+         */
         filterAttributes: [
             'name',
             'title',
@@ -36,6 +41,7 @@ define([
         buildCollectionView: function() {
             var collectionView = Marionette.getOption(this, 'collectionView');
             var filter = Marionette.getOption(this, 'filterText');
+
             var view = new collectionView({
                 collection: this.getCollection(),
                 filter: _.bind(filter, this)
@@ -47,20 +53,22 @@ define([
         getView: function() {
             if (!this.view) {
                 this.view = this.buildCollectionView();
-                this.view.on('itemview:contact:delete', _.bind(this.deleteMenu, this));
-                this.view.on('itemview:contact:add', _.bind(this.addMenu, this));
-                this.view.on('contact:add', _.bind(this.addMenu, this));
+                this.view.on('itemview:contact:delete', _.bind(this.deleteContact, this));
+                this.view.on('itemview:contact:add', _.bind(this.addContact, this));
+                this.view.on('contact:add', _.bind(this.addContact, this));
             }
 
             return this.view;
         },
 
-        deleteMenu: function(childView, options) {
+        deleteContact: function(childView, options) {
+
+            // A confirmation modal could be nice...
             var model = options.model;
             model.destroy();
         },
 
-        addMenu: function(childView, options) {
+        addContact: function(childView, options) {
             // using the random function to generate a pk since the server won't in this application
             var id = _.random(0, 10000);
             var model = new ContactModel({
@@ -77,6 +85,12 @@ define([
             return this.view.getFilterValue();
         },
 
+
+        /**
+         * Filtering a model against a set of condition
+         * @param  {Model} model
+         * @return {Boolean}
+         */
         filterText: function(model) {
             var valid = true;
 
@@ -91,10 +105,12 @@ define([
                 if (!_.isEmpty(textFilterValue)) {
                     valid = false;
 
+                    // _.find will stop once it finds a match, _.each won't
                     _.find(filterAttributes, function(attribute) {
                         if (model.has(attribute)) {
                             var rawValue = model.get(attribute);
 
+                            // If the value is an array, create a string with all its values
                             var value = _.isArray(rawValue) ? rawValue.join('') : rawValue;
                             value = value.toLowerCase();
 

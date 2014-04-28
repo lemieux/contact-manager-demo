@@ -29,10 +29,16 @@ define([
 
         initialize: function() {
             this.contactCollection = new ContactCollection();
+
+            // Initializes a callback to know when the collection is filled.
             this.contactCollectionFetchCallbacks = new Marionette.Callbacks();
+
             this.layout = new LayoutView();
         },
 
+        /**
+         * Show the contact list
+         */
         showListing: function() {
             this.contactCollectionFetchCallbacks.add(function() {
                 this.app.content.show(this.layout);
@@ -50,7 +56,15 @@ define([
             }, this);
         },
 
+        /**
+         * Shows the contact details
+         */
         showContactDetails: function(id) {
+
+            // If when arrived on the contact details page at first,
+            // the collection might not be initialized.
+            // This part might be optimized to use only the contact
+            // instead of fetching the whole collection
             this.contactCollectionFetchCallbacks.add(function() {
                 var model = this.contactCollection.get(id);
 

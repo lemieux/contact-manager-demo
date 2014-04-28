@@ -16732,6 +16732,9 @@ define('modules/navigation/main',[
             return false;
         },
 
+        /**
+         * Catch all clicks in the page
+         */
         catchLinks: function() {
             $(document).on('click', 'a[href^="/"]', this.onClick);
         }
@@ -21655,10 +21658,20 @@ define('modules/contact/views/contact/detail-view',[
             'click @ui.saveButton': 'contact:save'
         },
 
+        /**
+         * Get the element from the UI object
+         * @param  {String} fieldName
+         * @return {jQuery Object}
+         */
         getFieldElement: function(fieldName) {
             return this.ui[fieldName + 'Group'];
         },
 
+        /**
+         * Sets a field in error state
+         * @param {String} fieldName
+         * @param {String} errorMessage
+         */
         setFieldError: function(fieldName, errorMessage) {
             var element = this.getFieldElement(fieldName);
 
@@ -21674,12 +21687,21 @@ define('modules/contact/views/contact/detail-view',[
             }
         },
 
+        /**
+         * Remove the error state from a field
+         * @param  {String} fieldName
+         */
         unsetFieldError: function(fieldName) {
             var element = this.getFieldElement(fieldName);
 
             element.removeClass('has-error');
             element.find('[data-ui-error]').remove();
         },
+
+        /*
+         *   The following methods are helpers for each fields of the form
+         */
+
 
         setNameFieldError: function(errorMessage) {
             this.setFieldError('name', errorMessage);
@@ -25065,6 +25087,9 @@ define('modules/contact/controllers/contact-detail-controller',[
 
                 this.view.on('contact:save', _.bind(this.saveContact, this));
 
+                // Every field is created manually here, but a Backbone.Form could
+                // be used instead. I did not have time to make it work with Marionette.
+
                 this.nameField = new Backbone.Form.editors.Text({
                     model: this.getModel(),
                     key: 'name',
@@ -25117,6 +25142,9 @@ define('modules/contact/controllers/contact-detail-controller',[
 
         saveContact: function() {
             var hasErrors = false;
+
+            // Checks every field for errors
+
             var nameError = this.nameField.commit();
 
             if (nameError) {
@@ -25323,37 +25351,67 @@ define('modules/contact/views/contact/collection-view',[
             'submit form': 'applyFilter'
         },
 
+        /**
+         * Get the text filter value
+         * @return {String}
+         */
         getFilterValue: function() {
             return this.ui.filterInput.val();
         },
 
+        /**
+         * Event handler that apply the filter to the collection view
+         * @param  {Event} e
+         */
         applyFilter: function(e) {
+            // Calls the internal function that will re-render the collection part
+            // of this composite view.
+            //
+            // The filter is applied when the collection is rendered.
             this._renderChildren();
 
             e.preventDefault();
         },
 
         onRender: function() {
-            // the handler will be delayed by 200ms and by a maximum of 600ms
+            // the handler will be delayed by 200ms
             var keydownHandler = _.debounce(_.bind(this.applyFilter, this), 200);
 
             this.ui.filterInput.on('keydown', keydownHandler);
         },
 
+        /**
+         * Add a new view to the collection view
+         * @param {Model} item
+         * @param {Collection} collection
+         * @param {Object} options
+         *
+         * This is taken from Marionette's source and modified to use the filter.
+         */
         addChildView: function(item, collection, options) {
             var filter = this.filter || Marionette.getOption(this, 'filter');
+
+            // Rejects the item if a filter is present and item doesn't pass the filter
             if (filter && !filter(item)) {
                 return;
             }
+
             this.closeEmptyView();
             var ItemView = this.getItemView();
             return this.addItemView(item, ItemView, options.index);
         },
 
+        /**
+         * Render the collection
+         *
+         * This is taken from Marionette's source and modified to use the filter.
+         */
         showCollection: function() {
             var filter = this.filter || Marionette.getOption(this, 'filter');
             var ItemView = this.getItemView();
             this.collection.each(function(item, index) {
+
+                // Rejects the item if a filter is present and item doesn't pass the filter
                 if (filter && !filter(item)) {
                     return;
                 }
@@ -25361,17 +25419,16 @@ define('modules/contact/views/contact/collection-view',[
             }, this);
         },
 
+        /**
+         * Evaluates if the collection is empty
+         * @param  {Collection}  collection
+         * @return {Boolean}
+         */
         isEmpty: function(collection) {
             var filter = this.filter || Marionette.getOption(this, 'filter');
 
-            if (!filter) {
-                return collection.length === 0;
-            }
-            return collection.filter(filter).length === 0;
-        },
-
-        setFilter: function(filter) {
-            this.filter = filter;
+            // If a filter is active, the collection is filtered first.
+            return (filter ? collection.filter(filter) : collection).length === 0;
         }
     });
 });
@@ -25383,6 +25440,10 @@ define('modules/contact/models/contact-model',[
     return Backbone.Model.extend({
         urlRoot: '/api/contacts/',
 
+        /**
+         * Schema to validate the model against.
+         * @type {Object}
+         */
         schema: {
             name: {
                 type: 'Text',
@@ -25436,6 +25497,11 @@ define('modules/contact/controllers/contact-listing-controller',[
     ContactModel
 ) {
     return Marionette.Controller.extend({
+
+        /**
+         * Attributes that will be used to generate the filter function
+         * @type {Array}
+         */
         filterAttributes: [
             'name',
             'title',
@@ -25460,6 +25526,7 @@ define('modules/contact/controllers/contact-listing-controller',[
         buildCollectionView: function() {
             var collectionView = Marionette.getOption(this, 'collectionView');
             var filter = Marionette.getOption(this, 'filterText');
+
             var view = new collectionView({
                 collection: this.getCollection(),
                 filter: _.bind(filter, this)
@@ -25471,20 +25538,22 @@ define('modules/contact/controllers/contact-listing-controller',[
         getView: function() {
             if (!this.view) {
                 this.view = this.buildCollectionView();
-                this.view.on('itemview:contact:delete', _.bind(this.deleteMenu, this));
-                this.view.on('itemview:contact:add', _.bind(this.addMenu, this));
-                this.view.on('contact:add', _.bind(this.addMenu, this));
+                this.view.on('itemview:contact:delete', _.bind(this.deleteContact, this));
+                this.view.on('itemview:contact:add', _.bind(this.addContact, this));
+                this.view.on('contact:add', _.bind(this.addContact, this));
             }
 
             return this.view;
         },
 
-        deleteMenu: function(childView, options) {
+        deleteContact: function(childView, options) {
+
+            // A confirmation modal could be nice...
             var model = options.model;
             model.destroy();
         },
 
-        addMenu: function(childView, options) {
+        addContact: function(childView, options) {
             // using the random function to generate a pk since the server won't in this application
             var id = _.random(0, 10000);
             var model = new ContactModel({
@@ -25501,6 +25570,12 @@ define('modules/contact/controllers/contact-listing-controller',[
             return this.view.getFilterValue();
         },
 
+
+        /**
+         * Filtering a model against a set of condition
+         * @param  {Model} model
+         * @return {Boolean}
+         */
         filterText: function(model) {
             var valid = true;
 
@@ -25515,10 +25590,12 @@ define('modules/contact/controllers/contact-listing-controller',[
                 if (!_.isEmpty(textFilterValue)) {
                     valid = false;
 
+                    // _.find will stop once it finds a match, _.each won't
                     _.find(filterAttributes, function(attribute) {
                         if (model.has(attribute)) {
                             var rawValue = model.get(attribute);
 
+                            // If the value is an array, create a string with all its values
                             var value = _.isArray(rawValue) ? rawValue.join('') : rawValue;
                             value = value.toLowerCase();
 
@@ -25549,13 +25626,8 @@ define('modules/contact/views/header-view',[
 
         className: 'page-header',
 
-        initialize: function(options) {
-            _.bindAll(this, 'template');
-            this.text = options.text;
-        },
-
         template: function() {
-            return this.text;
+            return Marionette.getOption(this, 'text');
         }
     });
 });
@@ -25603,10 +25675,16 @@ define('modules/contact/main',[
 
         initialize: function() {
             this.contactCollection = new ContactCollection();
+
+            // Initializes a callback to know when the collection is filled.
             this.contactCollectionFetchCallbacks = new Marionette.Callbacks();
+
             this.layout = new LayoutView();
         },
 
+        /**
+         * Show the contact list
+         */
         showListing: function() {
             this.contactCollectionFetchCallbacks.add(function() {
                 this.app.content.show(this.layout);
@@ -25624,7 +25702,15 @@ define('modules/contact/main',[
             }, this);
         },
 
+        /**
+         * Shows the contact details
+         */
         showContactDetails: function(id) {
+
+            // If when arrived on the contact details page at first,
+            // the collection might not be initialized.
+            // This part might be optimized to use only the contact
+            // instead of fetching the whole collection
             this.contactCollectionFetchCallbacks.add(function() {
                 var model = this.contactCollection.get(id);
 
