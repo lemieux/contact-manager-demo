@@ -58,6 +58,8 @@ module.exports = function(grunt) {
                         var middlewares;
                         middlewares = [];
                         middlewares.push(modRewrite(['^/api/contacts/$ /api/contact-list.json [L]']));
+                        middlewares.push(modRewrite(['^/\\d*/$ /index.html [L]']));
+                        middlewares.push(modRewrite(['^/\\d*$ /index.html [L]']));
                         middlewares.push(modRewrite(['^/api/contacts/\\d*$ /api/contact-list.json [L]']));
                         middlewares.push(modRewrite(['^/api/contacts/\\d*/$ /api/contact-list.json [L]']));
                         options.base.forEach(function(base) {
